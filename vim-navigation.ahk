@@ -1,17 +1,4 @@
-﻿; ahk-vim-navigation.ahk
-; Written by Jongbin Jung
-;
-; Incorporated some script from Model_Vim.ahk
-; Written by Rich Alesi
-; and Modified for AHK_L by Andrej Mitrovic
-; (http://www.autohotkey.com/board/topic/41206-modal-vim/)
-; 
-; Update (08/16/2014)
-; Simplified script to take modifiers into account
-; (see, http://www.autohotkey.com/board/topic/83755
-; -using-an-arbitrary-key-as-a-modifier-without-sacrificing-it/)
-
-;================================================
+﻿;================================================
 ; COPY SCRIPT TO StartUp FOLDER FOR AUTORUNNING
 ;put this line near the top of your script: 
     FileCreateShortcut, %A_ScriptFullPath%, %A_Startup%\%A_ScriptName%.lnk, %A_ScriptDir% 
