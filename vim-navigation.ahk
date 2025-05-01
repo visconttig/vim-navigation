@@ -12,6 +12,17 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 inputNumber := " "
 lastCommand = {ShiftDown}{ShiftUp}
 
+; -------------------------------------------------------------
+;    Make sure native Ctrl+X/C/V never get eaten by other hotkeys
+; -------------------------------------------------------------
+#If !WinExist("VIM-Mode Activated")
+~^x::SendInput ^x
+~^c::SendInput ^c
+~^v::SendInput ^v
+#If
+
+
+
 ; Notification GUI {{{
 notify(text, time = 2000)
 {
@@ -50,25 +61,33 @@ $Esc::
     }
 Return ; }}}
 
-; [Activate whith Ctrl key] HotKey to Initiate VI-mode with Double-tap of  Ctrl {{{
-    $Ctrl::
-    If (A_PriorHotKey = "$Ctrl" AND A_TimeSincePriorHotKey < 500)
+;--------------------------------------------------------------------------
+;  - Uses `~Ctrl::` so Ctrl always passes through natively
+;  - Only runs the “activate VI-mode” code when you double-tap Ctrl quickly
+;
+;–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+; Double-tap Ctrl on KEY-UP, not key-down, so holds don’t repeat
+;–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+~Ctrl Up::
+    ; only trigger if the *previous* Up was also Ctrl Up
+    ; and happened under 500 ms ago, with no other modifiers
+    if (A_PriorHotkey = "~Ctrl Up"
+        && A_TimeSincePriorHotkey < 500
+        && !GetKeyState("Shift","P")
+        && !GetKeyState("Alt","P")
+        && !GetKeyState("LWin","P")
+        && !GetKeyState("RWin","P"))
     {
-        ; Set the flags for OSD
         Gui, 99:+AlwaysOnTop -Caption +ToolWindow +Disabled -SysMenu +Owner
-        ; Add and set the OSD Text
-        Gui, 99:Font, s14 w800 , Arial ; s18
-        Gui, 99:Add, Text, cff0005 , VIM Mode
-        ; OSD Background Color (Black)
+        Gui, 99:Font, s14 w800, Arial
+        Gui, 99:Add, Text, cff0005, VIM Mode
         Gui, 99:Color, 000000
         Gui, 99:Show,NoActivate x1625 y125, VIM-Mode Activated
-        ; x25 y125
     }
-    Else
-    {
-        SendInput {Ctrl}
-    }
-Return ; }}}
+Return
+
+
+; }}}
 
 #IfWinExist VIM-Mode Activated ; {{{
 
@@ -284,22 +303,29 @@ Return ; }}}
     }
 
     ; Copy (Yank) / Cut (Delete) / Paste (Put)
-    y::
-    {
-        SendInput ^c
-        resetInputNumber()
-        return
-    }
+    ; -------------------------------------------------------------
+; In VI-mode, make y (yank) and d (delete→cut) clear + wait
+; -------------------------------------------------------------
+y::
+{
+    Clipboard := ""         ; empty out any old clipboard
+    SendInput ^c            ; copy selection
+    ClipWait, 0.5           ; wait up to 0.5s for clipboard to change
+    resetInputNumber()
+    return
+}
+
+d::
+{
+    Clipboard := ""         ; empty out any old clipboard
+    SendInput ^x            ; cut selection
+    ClipWait, 0.5           ; wait up to 0.5s for clipboard to change
+    resetInputNumber()
+    return
+}
     p::
     {
         SendInput ^v
-        resetInputNumber()
-        return
-    }
-    d::
-    {
-        lastCommand = ^x
-        SendInput, %lastCommand%
         resetInputNumber()
         return
     }
@@ -551,6 +577,13 @@ CapsLock::BackSpace
 Backspace::CapsLock
 
 
+; -------------------------------------------------------------
+; Make Shift+Del Shift+Del → “delete entire line”
+; -------------------------------------------------------------
++Del::
+    Send {Home}+{End}{Del}    ; go to start of line, select to end, delete
+Return
+#If
 
 
 

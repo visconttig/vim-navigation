@@ -27,3 +27,5 @@ SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 ::jvd::https://docs.oracle.com/en/java/javase/17/docs/api/
 ; AutoHotKey docs
 ::ahk::https://www.autohotkey.com/docs/v1/
+; Lorem Ipsum generator
+::lri::https://loremipsum.io/
