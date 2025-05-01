@@ -464,3 +464,101 @@ endVIM()
     return
 }
 
+
+;### ALT Keypress Implied for all below ###
+; For ad hoc navigation when ALT where other methods are
+; not practical (ex: in popup menus).
+
+; i UP          (Cursor up line)
+!i::Send {UP} 
+; k DOWN            (Cursor down line)
+!k::Send {DOWN} 
+
+; j LEFT        (Cursor left one character)
+!j::Send {LEFT} 
+; l RIGHT       (Cursor right one character)
+!l::Send {RIGHT} 
+
+; h     ALT + RIGHT (Cursor to beginning of line)
+!h::Send {HOME} 
+; ; ALT + LEFT  (Cursor to end of line)
+!;::Send {END}      
+
+; h     SHIFT + HOME    (Cursor to beginning of document)
+!u::Send ^{HOME} 
+; o SHIFT + END (Cursor to end of document)
+!o::Send ^{END} 
+
+;### CTRL + ALT Keypress Implied for all below ###
+; j     CTRL + LEFT (Cursor left per word)
+!^j::Send ^{LEFT} 
+; l CTRL + RIGHT    (Cursor right per word)
+!^l::Send ^{RIGHT} 
+
+;### SHIFT + ALT Keypress Implied for all below ###
+; i SHIFT + UP  (Highlight per line)
+!+i::Send +{UP} 
+; k SHIFT + DOWN    (Highlight per line)
+!+k::Send +{DOWN} 
+
+; j SHIFT + LEFT    (Highlight per character)
+!+j::Send +{LEFT} 
+; l SHIFT + RIGHT   (Highlight per character)
+!+l::Send +{RIGHT} 
+
+; h SHIFT + ALT + LEFT  (Highlight to beginning of line)
+!+h::Send +{HOME} 
+; ; SHIFT + ALT + RIGHT (Hightlight to end of line)
+!+;::Send +{END}    
+
+; u SHIFT + CTRL + HOME (Highlight to beggininng of document)
+!+u::Send ^+{HOME} 
+; o SHIFT + CTRL + END  (Hightlight to end of document)
+!+o::Send ^+{END} 
+
+;### SHIFT + CTRL + ALT Keypress Implied for all below ###
+; i SHIFT + ALT + UP    (Multiply cursor up)
+!+^j::Send +^{LEFT} 
+; i SHIFT + ALT + UP    (Multiply cursor up)
+!+^l::Send +^{RIGHT} 
+
+; i SHIFT + ALT + UP    (Multiply cursor up)
+!+^i::Send +!{UP} 
+; i SHIFT + ALT + UP    (Multiply cursor up)
+!+^k::Send +!{DOWN} 
+
+;### CTRL + SHIFT Keypress Implied for all below ###
++^i::Send +^{UP}
++^k::Send +^{DOWN}
+
+; Run Everything search program
+^!e:: ; CTRL+ALT+E
+    Run, C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Everything.lnk
+
+; Maps ALTgr to just ALT
+LControl & RAlt::Alt
+
+; Enter ZEN Mode on VScode or Intellij
+F3::Send ^kz 
+
+; Remap Mayus (Lock-key) to Backspace
+CapsLock::BackSpace
+^CapsLock::CapsLock
++CapsLock::CapsLock
+; Remap bakcspace 
+;   To un-learn the habit of using it 
+;   constantly instead of CapsLock key.
+Backspace::CapsLock
+
+
+; Change directory on terminals.
+; cd into projects folder
+::cdt::cd "C:\Users\visco\OneDrive\Desktop\html-projects"
+; cd into Home directory
+::cdh::cd ~
+
+; Amazon.com
+::amz::site:amazon.com 
+; Stackoverflow.com
+::stk::site:stackoverflow.com
+
