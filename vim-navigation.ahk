@@ -551,14 +551,6 @@ CapsLock::BackSpace
 Backspace::CapsLock
 
 
-; Change directory on terminals.
-; cd into projects folder
-::cdt::cd "C:\Users\visco\OneDrive\Desktop\html-projects"
-; cd into Home directory
-::cdh::cd ~
 
-; Amazon.com
-::amz::site:amazon.com 
-; Stackoverflow.com
-::stk::site:stackoverflow.com
+
 
