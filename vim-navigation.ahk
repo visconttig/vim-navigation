@@ -12,15 +12,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 inputNumber := " "
 lastCommand = {ShiftDown}{ShiftUp}
 
-; -------------------------------------------------------------
-;    Make sure native Ctrl+X/C/V never get eaten by other hotkeys
-; -------------------------------------------------------------
-#If !WinExist("VIM-Mode Activated")
-~^x::SendInput ^x
-~^c::SendInput ^c
-~^v::SendInput ^v
-#If
-
 
 
 ; Notification GUI {{{
