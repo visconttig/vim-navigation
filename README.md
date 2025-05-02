@@ -136,6 +136,75 @@ Hold `Space`, then press:
 
 ---
 
+## Extras
+
+### 📦 Navigation (Vim-style, but ALT is your buddy)
+
+| Combo     | Action       | Description                 |
+| --------- | ------------ | --------------------------- |
+| `Alt + i` | ↑ Move Up    | Just like `k` in Vim        |
+| `Alt + k` | ↓ Move Down  | Just like `j` in Vim        |
+| `Alt + j` | ← Move Left  | Move left one character     |
+| `Alt + l` | → Move Right | Move right one character    |
+| `Alt + h` | ⬅ Home       | Go to beginning of the line |
+| `Alt + ;` | ➡ End        | Go to end of the line       |
+| `Alt + u` | Ctrl + Home  | Go to beginning of document |
+| `Alt + o` | Ctrl + End   | Go to end of document       |
+
+### 🔥 Word-by-word Navigation (ALT + CTRL)
+
+| Combo            | Action             |
+| ---------------- | ------------------ |
+| `Ctrl + Alt + j` | Move left by word  |
+| `Ctrl + Alt + l` | Move right by word |
+
+### 🎯 Selecting Stuff (with SHIFT)
+
+| Combo             | Action                          |
+| ----------------- | ------------------------------- |
+| `Shift + Alt + i` | Select line above               |
+| `Shift + Alt + k` | Select line below               |
+| `Shift + Alt + j` | Select character to the left    |
+| `Shift + Alt + l` | Select character to the right   |
+| `Shift + Alt + h` | Select to beginning of line     |
+| `Shift + Alt + ;` | Select to end of line           |
+| `Shift + Alt + u` | Select to beginning of document |
+| `Shift + Alt + o` | Select to end of document       |
+
+### 🤯 Selecting Word-by-word (SHIFT + CTRL + ALT)
+
+| Combo                    | Action               |
+| ------------------------ | -------------------- |
+| `Ctrl + Shift + Alt + j` | Select previous word |
+| `Ctrl + Shift + Alt + l` | Select next word     |
+
+### 🤹 Multicursor-ish? (SHIFT + CTRL + ALT)
+
+| Combo                    | Action                        |
+| ------------------------ | ----------------------------- |
+| `Ctrl + Shift + Alt + i` | Move multicursor up (kinda)   |
+| `Ctrl + Shift + Alt + k` | Move multicursor down (kinda) |
+
+### 🧙‍♂️ Bonus Combos
+
+| Combo             | Action                                                   |
+| ----------------- | -------------------------------------------------------- |
+| `Ctrl + Alt + E`  | Launch\* [Everything Search](https://www.voidtools.com/) |
+| `CapsLock`        | Acts like `Backspace` (say goodbye to bad habits)        |
+| `Ctrl + CapsLock` | Acts like regular `CapsLock`                             |
+| `Backspace`       | Now acts like `CapsLock`                                 |
+
+---
+
+## 🎧 Special Modes
+
+> I don't have a right `Control` key in my keyboard !
+
+- **F3 in VSCode** launches _Zen Mode_ with `Ctrl + K, Z`. Instant minimalism. 🧘
+- **AltGr fix**: When active in any window, `AltGr` becomes regular `Alt`. Helpful for typing special characters or fixing layout bugs.
+
+---
+
 # 🪄 Philosophy
 
 This script was born from the idea that **you should not have to use your mouse like some kind of digital rodent herder**. Instead, ride the lightning of keyboard-driven navigation.
@@ -146,7 +215,7 @@ Use it. Learn it. Become it. Soon, you’ll look at other people dragging window
 
 # 🧠 Credits
 
-- Written by Jongbin Jung
+- Original script by Jongbin Jung
 - Inspired by Model_Vim.ahk by Rich Alesi
 - Adapted for modern AHK by Andrej Mitrovic
 - README written under heavy influence from caffeine and [**_The Hitchhiker’s Guide to the Galaxy_**](https://www.amazon.com/Hitchhikers-Guide-Galaxy-Douglas-Adams-ebook/dp/B000XUBC2C/ref=tmm_kin_swatch_0?_encoding=UTF8&dib_tag=se&dib=eyJ2IjoiMSJ9.id52f0YUeOh-GAio4HESmqpM0LfaYvovTl_4RlXLHkowV7kLCWpJrdeplhse1nXMATixIGY78l456bvZsaVWNyEAMRFEg-9bvlrBpB0Da9MctE7QxpK_j38hksoM2q4Ps5QW_i2mKL1xYTwEWCiHOLn9pHjp2c4T9ylMXzo2oSlYr61Oi5erkks7atWsjaNTVxOkpoxz-ay2-pAuIDuGYaD4DJF4Np840Ue9nBT0BGY.Rc4jdMjUMoyg6En6QQGVGDF2fr50aJHyshPlWUUYdO8&qid=1712870820&sr=8-1)

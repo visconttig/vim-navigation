@@ -3,6 +3,7 @@
 ;put this line near the top of your script: 
     FileCreateShortcut, %A_ScriptFullPath%, %A_Startup%\%A_ScriptName%.lnk, %A_ScriptDir% 
 ;=============================================
+; AutoHotKey Version 1 
 
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
