@@ -97,7 +97,7 @@ Return ; }}}
             Gui, 44:Font, s14 Bolder, Segoe UI
             Gui, 44:Color, Black
             Gui, 44:Add, Text, cWhite, %msg%
-            Gui, 44:Show, AutoSize xCenter y425
+            Gui, 44:Show, NoActivate, AutoSize xCenter y425
             
             HideMessage()
             return
