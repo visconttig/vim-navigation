@@ -1,15 +1,17 @@
-#Persistent
-#SingleInstance
-
 ;================================================
-; COPY SCRIPT TO StartUp FOLDER FOR AUTORUNNING
-;put this line near the top of your script: 
-FileCreateShortcut, %A_ScriptFullPath%, %A_Startup%\%A_ScriptName%.lnk, %A_ScriptDir% 
-;=============================================
+; ; COPY SCRIPT TO StartUp FOLDER FOR AUTORUNNING
+; ;put this line near the top of your script: 
+; FileCreateShortcut, %A_ScriptFullPath%, %A_Startup%\%A_ScriptName%.lnk, %A_ScriptDir% 
+; ;=============================================
 
-; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
+#Persistent
+#SingleInstance Force
 SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
+; Run as Admin
+if not A_IsAdmin
+    Run *RunAs "%A_ScriptFullPath%"
+#Warn  ; Enable warnings to assist with detecting common errors.
+SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
 
 ; Change directory on terminals.      
 ; cd into projects folder

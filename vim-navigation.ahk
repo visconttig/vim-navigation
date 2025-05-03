@@ -1,13 +1,17 @@
 ﻿;================================================
-; COPY SCRIPT TO StartUp FOLDER FOR AUTORUNNING
-;put this line near the top of your script: 
-    FileCreateShortcut, %A_ScriptFullPath%, %A_Startup%\%A_ScriptName%.lnk, %A_ScriptDir% 
-;=============================================
+; ; COPY SCRIPT TO StartUp FOLDER FOR AUTORUNNING
+; ;put this line near the top of your script: 
+;     FileCreateShortcut, %A_ScriptFullPath%, %A_Startup%\%A_ScriptName%.lnk, %A_ScriptDir% 
+; ;=============================================
 ; AutoHotKey Version 1 
 
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+; Run as Admin
+#SingleInstance Force
+if not A_IsAdmin
+    Run *RunAs "%A_ScriptFullPath%"
 
 ; Global variables
 inputNumber := " "
@@ -114,11 +118,11 @@ Return
         }
 
     ; i(nput) end VIM-mode
-    i::
-    {
-        endVIM()
-        return
-    }
+    ; i::
+    ; {
+    ;     endVIM()
+    ;     return
+    ; }
 
     ; Other input modes ...
     +i::
