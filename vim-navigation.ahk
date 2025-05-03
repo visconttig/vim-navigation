@@ -73,19 +73,66 @@ Return ; }}}
         && !GetKeyState("Alt","P")
         && !GetKeyState("LWin","P")
         && !GetKeyState("RWin","P"))
-    {
-        Gui, 99:+AlwaysOnTop -Caption +ToolWindow +Disabled -SysMenu +Owner
-        Gui, 99:Font, s14 w800, Arial
-        Gui, 99:Add, Text, cff0005, VIM Mode
-        Gui, 99:Color, 000000
-        Gui, 99:Show,NoActivate x1625 y125, VIM-Mode Activated
-    }
-Return
+        {
+            Gui, 99:+AlwaysOnTop -Caption +ToolWindow +Disabled -SysMenu +Owner
+            Gui, 99:Font, s14 w800, Arial
+            Gui, 99:Add, Text, cff0005, VIM Mode
+            Gui, 99:Color, 000000
+            Gui, 99:Show,NoActivate x1625 y125, VIM-Mode Activated
+        }
+        Return
+        
+        
+        ; }}}
+        
+        #IfWinExist VIM-Mode Activated ; {{{
+            
+        ; Block letters while Vim mode activated {{{
+            
+        ; Reusable function to display any message
+        ShowMessage(msg) {
+            
+            Gui, 44:Destroy  ; Destroy previous GUI (if any)
+            Gui, 44:+AlwaysOnTop +ToolWindow -SysMenu -Caption
+            Gui, 44:Font, s14 Bolder, Segoe UI
+            Gui, 44:Color, Black
+            Gui, 44:Add, Text, cWhite, %msg%
+            Gui, 44:Show, AutoSize xCenter y425
+            
+            HideMessage()
+            return
+        }
+        
+        HideMessage(){
+            SetTimer, DestroyGui, -1000
+            return
+            
+            DestroyGui:
+            Gui, 44: Destroy
+            Return
+        }
+        
+     
+    ; 'i' key disabled (chang to 'true' to activate)
+    Global IkeyActivatesInputMode := false
+    c::
+    e::
+    f::
+    g::
+    m::
+    n::
+    o::
+    q::
+    r::
+    s::
+    t::
+    v::
+    z::
+        ShowMessage("[Vim Mode is Active]")
+        return
+    ; }}}
+    
 
-
-; }}}
-
-#IfWinExist VIM-Mode Activated ; {{{
 
     ; ESC ends VIM-mode
     ESC:: 
@@ -118,11 +165,15 @@ Return
         }
 
     ; i(nput) end VIM-mode
-    ; i::
-    ; {
-    ;     endVIM()
-    ;     return
-    ; }
+    i::
+    {   
+        if(IkeyActivatesInputMode){
+            endVIM()
+        } else {
+            ShowMessage("i : Input Mode")
+        }
+        return
+    }
 
     ; Other input modes ...
     +i::
