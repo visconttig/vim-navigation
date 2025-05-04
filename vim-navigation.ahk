@@ -84,35 +84,38 @@ Return ; }}}
         
         
         ; }}}
+
+                ; Reusable function to display any message
+                ShowMessage(msg) {
+            
+                    Gui, 44:Destroy  ; Destroy previous GUI (if any)
+                    Gui, 44:+AlwaysOnTop +ToolWindow -SysMenu -Caption
+                    Gui, 44:Font, s14 Bolder, Segoe UI
+                    Gui, 44:Color, Black
+                    Gui, 44:Add, Text, cWhite, %msg%
+                    Gui, 44:Show, NoActivate, AutoSize xCenter y425
+                    
+                    HideMessage()
+                    return
+                }
+                
+                HideMessage(){
+                    SetTimer, DestroyGui, -1000
+                    return
+                    
+                    DestroyGui:
+                    Gui, 44: Destroy
+                    Return
+                }
+
+        ; ^k:: ; Fix for ClickUp.com
+        ;     ShowMessage("Ctrl+k pressed.")
+        ;     Send ^{k}
+        ;     return
         
         #IfWinExist VIM-Mode Activated ; {{{
             
         ; Block letters while Vim mode activated {{{
-            
-        ; Reusable function to display any message
-        ShowMessage(msg) {
-            
-            Gui, 44:Destroy  ; Destroy previous GUI (if any)
-            Gui, 44:+AlwaysOnTop +ToolWindow -SysMenu -Caption
-            Gui, 44:Font, s14 Bolder, Segoe UI
-            Gui, 44:Color, Black
-            Gui, 44:Add, Text, cWhite, %msg%
-            Gui, 44:Show, NoActivate, AutoSize xCenter y425
-            
-            HideMessage()
-            return
-        }
-        
-        HideMessage(){
-            SetTimer, DestroyGui, -1000
-            return
-            
-            DestroyGui:
-            Gui, 44: Destroy
-            Return
-        }
-        
-     
     ; 'i' key disabled (chang to 'true' to activate)
     Global IkeyActivatesInputMode := false
     c::
