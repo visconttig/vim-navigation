@@ -62,7 +62,7 @@ This script brings those mystical modes to Windows. Sort of like importing sushi
 | `w`        | Jump forward a word (Ctrl+→) |
 | `b`        | Jump back a word (Ctrl+←)    |
 | `0`        | Go to beginning of line      |
-| `-` or `$` | Go to end of line            |
+| `-` or `$` | Go up one line               |
 | `x`        | Delete character (🔪)        |
 
 ---
@@ -88,17 +88,17 @@ This script brings those mystical modes to Windows. Sort of like importing sushi
 
 ## 🦾 Selection Mode (Like cursor movement but juiced with Shift)
 
-| Key       | What it selects             |
-| --------- | --------------------------- |
-| `Shift+h` | Select left                 |
-| `Shift+l` | Select right                |
-| `Shift+j` | Select down                 |
-| `Shift+k` | Select up                   |
-| `Shift+w` | Select next word            |
-| `Shift+b` | Select previous word        |
-| `)`       | Select to beginning of line |
-| `_`       | Select to end of line       |
-| `Shift+x` | Delete selection            |
+| Key       | What it selects                 |
+| --------- | ------------------------------- |
+| `Shift+h` | Select left                     |
+| `Shift+l` | Select right                    |
+| `Shift+j` | Select down                     |
+| `Shift+k` | Select up                       |
+| `Shift+w` | Select next word                |
+| `Shift+b` | Select previous word            |
+| `)`       | Select to beginning of line     |
+| `_`       | Select to end of line           |
+| `Shift+x` | Delete (Ctrl+X / cut) selection |
 
 ---
 
@@ -142,48 +142,38 @@ Hold `Space`, then press:
 
 | Combo     | Action       | Description                 |
 | --------- | ------------ | --------------------------- |
-| `Alt + i` | ↑ Move Up    | Just like `k` in Vim        |
-| `Alt + k` | ↓ Move Down  | Just like `j` in Vim        |
-| `Alt + j` | ← Move Left  | Move left one character     |
-| `Alt + l` | → Move Right | Move right one character    |
-| `Alt + h` | ⬅ Home       | Go to beginning of the line |
-| `Alt + ;` | ➡ End        | Go to end of the line       |
-| `Alt + u` | Ctrl + Home  | Go to beginning of document |
-| `Alt + o` | Ctrl + End   | Go to end of document       |
+| `Alt + h` | ← Left       | Just like `h` in Vim        |
+| `Alt + j` | ↓ Down       | Just like `j` in Vim        |
+| `Alt + k` | ↑ Up         | Just like `k` in Vim        |
+| `Alt + l` | → Right      | Just like `l` in Vim        |
+| `Alt + w` | → Word       | Move forward by word        |
+| `Alt + b` | ← Word       | Move back by word           |
+| `Alt + 0` | ⬅ Line Start | Go to beginning of the line |
+| `Alt + $` | ➡ Line End   | Go to end of the line       |
+| `Alt + u` | ⬆ Document   | Go to beginning of document |
+| `Alt + o` | ⬇ Document   | Go to end of document       |
 
 ### 🔥 Word-by-word Navigation (ALT + CTRL)
 
 | Combo            | Action             |
 | ---------------- | ------------------ |
-| `Ctrl + Alt + j` | Move left by word  |
-| `Ctrl + Alt + l` | Move right by word |
+| `Ctrl + Alt + w` | Move forward word  |
+| `Ctrl + Alt + b` | Move backward word |
 
 ### 🎯 Selecting Stuff (with SHIFT)
 
 | Combo             | Action                          |
 | ----------------- | ------------------------------- |
-| `Shift + Alt + i` | Select line above               |
-| `Shift + Alt + k` | Select line below               |
-| `Shift + Alt + j` | Select character to the left    |
+| `Shift + Alt + h` | Select character to the left    |
+| `Shift + Alt + j` | Select line below               |
+| `Shift + Alt + k` | Select line above               |
 | `Shift + Alt + l` | Select character to the right   |
-| `Shift + Alt + h` | Select to beginning of line     |
-| `Shift + Alt + ;` | Select to end of line           |
+| `Shift + Alt + w` | Select next word                |
+| `Shift + Alt + b` | Select previous word            |
+| `Shift + Alt + 0` | Select to beginning of line     |
+| `Shift + Alt + $` | Select to end of line           |
 | `Shift + Alt + u` | Select to beginning of document |
 | `Shift + Alt + o` | Select to end of document       |
-
-### 🤯 Selecting Word-by-word (SHIFT + CTRL + ALT)
-
-| Combo                    | Action               |
-| ------------------------ | -------------------- |
-| `Ctrl + Shift + Alt + j` | Select previous word |
-| `Ctrl + Shift + Alt + l` | Select next word     |
-
-### 🤹 Multicursor-ish? (SHIFT + CTRL + ALT)
-
-| Combo                    | Action                        |
-| ------------------------ | ----------------------------- |
-| `Ctrl + Shift + Alt + i` | Move multicursor up (kinda)   |
-| `Ctrl + Shift + Alt + k` | Move multicursor down (kinda) |
 
 ### 🧙‍♂️ Bonus Combos
 

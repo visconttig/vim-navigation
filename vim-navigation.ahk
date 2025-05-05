@@ -103,7 +103,7 @@ Return ; }}}
                     Return
                 }
         
-        #IfWinExist VIM-Mode Activated ; {{{
+#IfWinExist VIM-Mode Activated ; {{{
             
         ; Block letters while Vim mode activated {{{
     ; 'i' key disabled (chang to 'true' to activate)
@@ -267,7 +267,7 @@ Return ; }}}
     }
     -::
     {
-        SendInput {End}
+        SendInput {Up}
         resetInputNumber()
         return
     }
@@ -325,7 +325,7 @@ Return ; }}}
     }
     +x::
     {
-        lastCommand = +{Delete}
+        lastCommand = ^x
         SendInput, %lastCommand%
         resetInputNumber()
         return
@@ -351,6 +351,7 @@ y::
 {
     Clipboard := ""         ; empty out any old clipboard
     SendInput ^c            ; copy selection
+    ShowMessage("Copy")
     ClipWait, 0.5           ; wait up to 0.5s for clipboard to change
     resetInputNumber()
     return
@@ -360,6 +361,7 @@ d::
 {
     Clipboard := ""         ; empty out any old clipboard
     SendInput ^x            ; cut selection
+    ShowMessage("Cut")
     ClipWait, 0.5           ; wait up to 0.5s for clipboard to change
     resetInputNumber()
     return
@@ -367,6 +369,7 @@ d::
     p::
     {
         SendInput ^v
+        ShowMessage("Paste")
         resetInputNumber()
         return
     }
@@ -375,6 +378,7 @@ d::
     /::
     {
         SendInput ^f
+        ShowMessage("Search")
         resetInputNumber()
         return
     }
@@ -383,6 +387,7 @@ d::
     u:: 
     {
         SendInput ^z
+        ShowMessage("Undo")
         resetInputNumber()
         return
     }
@@ -532,72 +537,50 @@ endVIM()
 }
 
 
-;### ALT Keypress Implied for all below ###
+;### Navigation / actions with ALT ###
 ; For ad hoc navigation with ALT where other methods are
 ; not practical (ex.: in popup menus).
 
-; i UP          (Cursor up line)
-!k::Send {UP} 
-; k DOWN            (Cursor down line)
-!j::Send {DOWN} 
+;## ALT-based Vim-like Navigation (! = ALT)
+; Basic Vim-style movement
+!h::Send {Left}      ; h - Left
+!j::Send {Down}      ; j - Down
+!k::Send {Up}        ; k - Up
+!l::Send {Right}     ; l - Right
 
-; j LEFT        (Cursor left one character)
-!h::Send {LEFT} 
-; l RIGHT       (Cursor right one character)
-!l::Send {RIGHT} 
+; Word-level movement (Vim: w and b)
+!w::Send ^{Right}    ; w - Word forward
+!b::Send ^{Left}     ; b - Word backward
 
-; h     ALT + RIGHT (Cursor to beginning of line)
-;!h::Send {HOME} 
-; ; ALT + LEFT  (Cursor to end of line)
-;!;::Send {END}      
+; Line navigation
+!0::Send {Home}      ; 0 - Line start
+!$::Send {End}       ; $ - Line end
 
-; *** checked ^
-; h     SHIFT + HOME    (Cursor to beginning of document)
-;!u::Send ^{HOME} 
-; o SHIFT + END (Cursor to end of document)
-;!o::Send ^{END} 
+; Document navigation
+!u::Send ^{Home}     ; u - Start of document
+!o::Send ^{End}      ; o - End of document
 
-;### CTRL + ALT Keypress Implied for all below ###
-; j     CTRL + LEFT (Cursor left per word)
-;!^j::Send ^{LEFT} 
-; l CTRL + RIGHT    (Cursor right per word)
-;!^l::Send ^{RIGHT} 
 
-;### SHIFT + ALT Keypress Implied for all below ###
-; i SHIFT + UP  (Highlight per line)
-;!+i::Send +{UP} 
-; k SHIFT + DOWN    (Highlight per line)
-;!+k::Send +{DOWN} 
+;## ALT + SHIFT = Selection (like Visual mode)
+; Selection with shift
+!+h::Send +{Left}        ; Select left
+!+j::Send +{Down}        ; Select down
+!+k::Send +{Up}          ; Select up
+!+l::Send +{Right}       ; Select right
 
-; j SHIFT + LEFT    (Highlight per character)
-;!+j::Send +{LEFT} 
-; l SHIFT + RIGHT   (Highlight per character)
-;!+l::Send +{RIGHT} 
+!+w::Send +^{Right}      ; Select word forward
+!+b::Send +^{Left}       ; Select word backward
 
-; h SHIFT + ALT + LEFT  (Highlight to beginning of line)
-;!+h::Send +{HOME} 
-; ; SHIFT + ALT + RIGHT (Hightlight to end of line)
-;!+;::Send +{END}    
+!+0::Send +{Home}        ; Select to line start
+!+$::Send +{End}         ; Select to line end
 
-; u SHIFT + CTRL + HOME (Highlight to beggininng of document)
-;!+u::Send ^+{HOME} 
-; o SHIFT + CTRL + END  (Hightlight to end of document)
-;!+o::Send ^+{END} 
+!+u::Send ^+{Home}       ; Select to document start
+!+o::Send ^+{End}        ; Select to document end
 
-;### SHIFT + CTRL + ALT Keypress Implied for all below ###
-; i SHIFT + ALT + UP    (Multiply cursor up)
-;!+^j::Send +^{LEFT} 
-; i SHIFT + ALT + UP    (Multiply cursor up)
-;!+^l::Send +^{RIGHT} 
+;## CTRL + ALT = Word-level navigation
+!^w::Send ^{Right}    ; Word forward
+!^b::Send ^{Left}     ; Word backward
 
-; i SHIFT + ALT + UP    (Multiply cursor up)
-;!+^i::Send +!{UP} 
-; i SHIFT + ALT + UP    (Multiply cursor up)
-;!+^k::Send +!{DOWN} 
-
-;### CTRL + SHIFT Keypress Implied for all below ###
-;+^i::Send +^{UP}
-;+^k::Send +^{DOWN}
 
 ; Run Everything search program
 ^!e:: ; CTRL+ALT+E
@@ -612,8 +595,6 @@ F3::Send ^kz
 ; Remap Mayus (Lock-key) to Backspace
 CapsLock::BackSpace
 ; Remap bakcspace 
-;   To un-learn the habit of using it 
-;   constantly instead of CapsLock key.
 $Backspace::
     ShowMessage("Use 'CapsLock' key!!")
     return
@@ -645,7 +626,6 @@ $Backspace::
 
 
         GetCapsLockState(){
-            ShowMessage("Double Shift pressed. Caps ON: " + IsCapsLockOn)
             return GetKeyState("CapsLock", "T")
         }
 
