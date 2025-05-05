@@ -5,15 +5,15 @@
 ; ;=============================================
 ; AutoHotKey Version 1 
 
-#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-; Run as Admin
+#NoEnv  
+SendMode Input  
+SetWorkingDir %A_ScriptDir%  
+
 #SingleInstance Force
 if not A_IsAdmin
     Run *RunAs "%A_ScriptFullPath%"
 
-; Global variables
+
 inputNumber := " "
 lastCommand = {ShiftDown}{ShiftUp}
 
@@ -42,12 +42,9 @@ notify(text, time = 2000)
 $Esc::
     If (A_PriorHotKey = "$Esc" AND A_TimeSincePriorHotKey < 500)
     {
-        ; Set the flags for OSD
         Gui, 99:+AlwaysOnTop -Caption +ToolWindow +Disabled -SysMenu +Owner
-        ; Add and set the OSD Text
         Gui, 99:Font, s15 bold
         Gui, 99:Add, Text, cAA0000, VI-NORMAL
-        ; OSD Background Color (Black)
         Gui, 99:Color, 000000
         Gui, 99:Show,NoActivate x25 y125, VIM-Mode Activated
     }
@@ -85,9 +82,7 @@ Return ; }}}
         
         ; }}}
 
-                ; Reusable function to display any message
                 ShowMessage(msg) {
-            
                     Gui, 44:Destroy  ; Destroy previous GUI (if any)
                     Gui, 44:+AlwaysOnTop +ToolWindow -SysMenu -Caption
                     Gui, 44:Font, s14 Bolder, Segoe UI
@@ -107,11 +102,6 @@ Return ; }}}
                     Gui, 44: Destroy
                     Return
                 }
-
-        ; ^k:: ; Fix for ClickUp.com
-        ;     ShowMessage("Ctrl+k pressed.")
-        ;     Send ^{k}
-        ;     return
         
         #IfWinExist VIM-Mode Activated ; {{{
             
@@ -168,6 +158,7 @@ Return ; }}}
         }
 
     ; i(nput) end VIM-mode
+    ; if 'i' is enabled
     i::
     {   
         if(IkeyActivatesInputMode){
@@ -542,70 +533,71 @@ endVIM()
 
 
 ;### ALT Keypress Implied for all below ###
-; For ad hoc navigation when ALT where other methods are
-; not practical (ex: in popup menus).
+; For ad hoc navigation with ALT where other methods are
+; not practical (ex.: in popup menus).
 
 ; i UP          (Cursor up line)
-!i::Send {UP} 
+!k::Send {UP} 
 ; k DOWN            (Cursor down line)
-!k::Send {DOWN} 
+!j::Send {DOWN} 
 
 ; j LEFT        (Cursor left one character)
-!j::Send {LEFT} 
+!h::Send {LEFT} 
 ; l RIGHT       (Cursor right one character)
 !l::Send {RIGHT} 
 
 ; h     ALT + RIGHT (Cursor to beginning of line)
-!h::Send {HOME} 
+;!h::Send {HOME} 
 ; ; ALT + LEFT  (Cursor to end of line)
-!;::Send {END}      
+;!;::Send {END}      
 
+; *** checked ^
 ; h     SHIFT + HOME    (Cursor to beginning of document)
-!u::Send ^{HOME} 
+;!u::Send ^{HOME} 
 ; o SHIFT + END (Cursor to end of document)
-!o::Send ^{END} 
+;!o::Send ^{END} 
 
 ;### CTRL + ALT Keypress Implied for all below ###
 ; j     CTRL + LEFT (Cursor left per word)
-!^j::Send ^{LEFT} 
+;!^j::Send ^{LEFT} 
 ; l CTRL + RIGHT    (Cursor right per word)
-!^l::Send ^{RIGHT} 
+;!^l::Send ^{RIGHT} 
 
 ;### SHIFT + ALT Keypress Implied for all below ###
 ; i SHIFT + UP  (Highlight per line)
-!+i::Send +{UP} 
+;!+i::Send +{UP} 
 ; k SHIFT + DOWN    (Highlight per line)
-!+k::Send +{DOWN} 
+;!+k::Send +{DOWN} 
 
 ; j SHIFT + LEFT    (Highlight per character)
-!+j::Send +{LEFT} 
+;!+j::Send +{LEFT} 
 ; l SHIFT + RIGHT   (Highlight per character)
-!+l::Send +{RIGHT} 
+;!+l::Send +{RIGHT} 
 
 ; h SHIFT + ALT + LEFT  (Highlight to beginning of line)
-!+h::Send +{HOME} 
+;!+h::Send +{HOME} 
 ; ; SHIFT + ALT + RIGHT (Hightlight to end of line)
-!+;::Send +{END}    
+;!+;::Send +{END}    
 
 ; u SHIFT + CTRL + HOME (Highlight to beggininng of document)
-!+u::Send ^+{HOME} 
+;!+u::Send ^+{HOME} 
 ; o SHIFT + CTRL + END  (Hightlight to end of document)
-!+o::Send ^+{END} 
+;!+o::Send ^+{END} 
 
 ;### SHIFT + CTRL + ALT Keypress Implied for all below ###
 ; i SHIFT + ALT + UP    (Multiply cursor up)
-!+^j::Send +^{LEFT} 
+;!+^j::Send +^{LEFT} 
 ; i SHIFT + ALT + UP    (Multiply cursor up)
-!+^l::Send +^{RIGHT} 
+;!+^l::Send +^{RIGHT} 
 
 ; i SHIFT + ALT + UP    (Multiply cursor up)
-!+^i::Send +!{UP} 
+;!+^i::Send +!{UP} 
 ; i SHIFT + ALT + UP    (Multiply cursor up)
-!+^k::Send +!{DOWN} 
+;!+^k::Send +!{DOWN} 
 
 ;### CTRL + SHIFT Keypress Implied for all below ###
-+^i::Send +^{UP}
-+^k::Send +^{DOWN}
+;+^i::Send +^{UP}
+;+^k::Send +^{DOWN}
 
 ; Run Everything search program
 ^!e:: ; CTRL+ALT+E
@@ -619,17 +611,49 @@ F3::Send ^kz
 
 ; Remap Mayus (Lock-key) to Backspace
 CapsLock::BackSpace
-^CapsLock::CapsLock
-+CapsLock::CapsLock
 ; Remap bakcspace 
 ;   To un-learn the habit of using it 
 ;   constantly instead of CapsLock key.
-Backspace::CapsLock
+$Backspace::
+    ShowMessage("Use 'CapsLock' key!!")
+    return
+
+;–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+; Double-tap Shift to **toggle CapsLock**
+;–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+~Shift Up::
+    ; only trigger if the *previous* Up was also Shift Up
+    ; and happened under 500 ms ago, with no other modifiers
+    if (A_PriorHotkey = "~Shift Up"
+        && A_TimeSincePriorHotkey < 500
+        && !GetKeyState("Ctrl","P")
+        && !GetKeyState("Alt","P")
+        && !GetKeyState("LWin","P")
+        && !GetKeyState("RWin","P"))
+        {
+            ;IsCapsLockOn := GetKeyState("CapsLock", "T")
+            IsCapsLockOn := GetCapsLockState()
+            if(IsCapsLockOn != 0){
+                SetCapsLockState, Off
+            } else {
+                SetCapsLockState, On
+            }
+         } 
+        
+        Return
+        ; }}}
+
+
+        GetCapsLockState(){
+            ShowMessage("Double Shift pressed. Caps ON: " + IsCapsLockOn)
+            return GetKeyState("CapsLock", "T")
+        }
 
 
 ; -------------------------------------------------------------
 ; Make Shift+Del Shift+Del → “delete entire line”
 ; -------------------------------------------------------------
+
 +Del::
     Send {Home}+{End}{Del}    ; go to start of line, select to end, delete
 Return
