@@ -13,7 +13,7 @@ SetWorkingDir %A_ScriptDir%
 if not A_IsAdmin
     Run *RunAs "%A_ScriptFullPath%"
 
-
+Global IkeyActivatesInputMode := true
 inputNumber := " "
 lastCommand = {ShiftDown}{ShiftUp}
 
@@ -107,7 +107,6 @@ Return ; }}}
             
         ; Block letters while Vim mode activated {{{
     ; 'i' key disabled (chang to 'true' to activate)
-    Global IkeyActivatesInputMode := false
     c::
     e::
     f::
